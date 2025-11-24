@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
+import dev.mednikov.expensetracking.ui.navigation.MainNavigation
 import dev.mednikov.expensetracking.ui.theme.ExpenseTrackingAppTheme
 
 @AndroidEntryPoint
@@ -36,6 +37,7 @@ fun AppContent(modifier: Modifier = Modifier) {
     Surface (modifier = modifier) {
         Column (verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally){
+            MainNavigation()
         }
     }
 }
