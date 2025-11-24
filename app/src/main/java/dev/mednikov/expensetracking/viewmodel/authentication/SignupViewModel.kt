@@ -13,32 +13,27 @@ import javax.inject.Inject
 @HiltViewModel
 class SignupViewModel @Inject constructor(private val userRepository: UserRepository): ViewModel() {
 
-    private val _uiState = MutableStateFlow<SignupState>(SignupState.Idle)
-    val uiState = _uiState.asStateFlow()
+    private val _signupState = MutableStateFlow(SignupUiState())
+    val signupState = _signupState.asStateFlow()
 
     fun signup(payload: SignupRequest) {
         viewModelScope.launch {
-            // Set loading state
-            _uiState.value = SignupState.Loading
+            _signupState.value = SignupUiState(isLoading = true)
 
-            // Call repo
             val result = userRepository.signup(payload)
 
-            // Check result
-            _uiState.value = if (result.isSuccess) {
-                SignupState.Success
+            _signupState.value = if (result.isSuccess) {
+                SignupUiState(success = true)
             } else {
-                SignupState.Error(result.exceptionOrNull()?.message ?: "Error")
+                SignupUiState(error = result.exceptionOrNull()?.message)
             }
-
         }
     }
 
 }
 
-sealed class SignupState {
-    object Idle : SignupState()
-    object Loading : SignupState()
-    object Success : SignupState()
-    data class Error(val message: String) : SignupState()
-}
+data class SignupUiState(
+    val isLoading: Boolean = false,
+    val success: Boolean = false,
+    val error: String? = null
+)

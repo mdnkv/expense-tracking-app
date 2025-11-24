@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -20,10 +23,20 @@ import dev.mednikov.expensetracking.viewmodel.authentication.SignupViewModel
 
 @Composable
 fun SignupScreen(navController: NavController, signupViewModel: SignupViewModel = hiltViewModel()) {
+
+    val signupState by signupViewModel.signupState.collectAsState()
+
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
     val firstNameState = rememberSaveable { mutableStateOf("") }
     val lastNameState = rememberSaveable { mutableStateOf("") }
+
+    LaunchedEffect(signupState.success) {
+        // Redirect to login screen if signup successful
+        if (signupState.success){
+            navController.navigate(NavScreens.LoginScreen.name)
+        }
+    }
 
     Surface (modifier = Modifier.fillMaxSize()) {
         Column (
@@ -53,7 +66,6 @@ fun SignupScreen(navController: NavController, signupViewModel: SignupViewModel 
                     )
                     // Call view model
                     signupViewModel.signup(payload)
-                    // Todo Go to Login screen if success
 
                 },
                 onLinkClicked = {navController.navigate(NavScreens.LoginScreen.name)}

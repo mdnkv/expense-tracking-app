@@ -6,21 +6,32 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.mednikov.expensetracking.models.LoginRequest
 import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.InputFieldComponent
+import dev.mednikov.expensetracking.viewmodel.authentication.LoginViewModel
 
-@Preview
 @Composable
-fun LoginScreen(navController: NavController? = null) {
+fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()) {
+    val loginState by loginViewModel.loginState.collectAsState()
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
+
+    LaunchedEffect(loginState.success) {
+        if (loginState.success){
+            navController.navigate(NavScreens.HomeScreen.name)
+        }
+    }
 
     Surface (modifier = Modifier.fillMaxSize()) {
         Column (
@@ -38,14 +49,17 @@ fun LoginScreen(navController: NavController? = null) {
                 buttonText = "Log in",
                 linkText = "I don't have an account yet",
                 onButtonClicked = {
-                    if (navController != null){
-                        navController!!.navigate(NavScreens.HomeScreen.name)
-                    }
+                    // todo validate input
+                    // Create payload
+                    val payload = LoginRequest(
+                        email = emailState.value,
+                        password = passwordState.value
+                    )
+                    // Call payload
+                    loginViewModel.login(payload)
                 },
                 onLinkClicked = {
-                    if (navController != null){
-                        navController!!.navigate(NavScreens.SignupScreen.name)
-                    }
+                    navController.navigate(NavScreens.SignupScreen.name)
                 }
             )
         }
