@@ -10,15 +10,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.mednikov.expensetracking.models.SignupRequest
 import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.InputFieldComponent
+import dev.mednikov.expensetracking.viewmodel.authentication.SignupViewModel
 
-@Preview
 @Composable
-fun SignupScreen(navController: NavController? = null) {
+fun SignupScreen(navController: NavController, signupViewModel: SignupViewModel = hiltViewModel()) {
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
     val firstNameState = rememberSaveable { mutableStateOf("") }
@@ -42,15 +43,20 @@ fun SignupScreen(navController: NavController? = null) {
                 buttonText = "Sign up",
                 linkText = "I already have an account",
                 onButtonClicked = {
-                    if (navController != null){
-                        navController!!.navigate(NavScreens.LoginScreen.name)
-                    }
+                    // Todo validate inputs
+                    // Create payload
+                    val payload = SignupRequest(
+                        email = emailState.value,
+                        password = passwordState.value,
+                        firstName = firstNameState.value,
+                        lastName = lastNameState.value
+                    )
+                    // Call view model
+                    signupViewModel.signup(payload)
+                    // Todo Go to Login screen if success
+
                 },
-                onLinkClicked = {
-                    if (navController != null){
-                        navController!!.navigate(NavScreens.LoginScreen.name)
-                    }
-                }
+                onLinkClicked = {navController.navigate(NavScreens.LoginScreen.name)}
             )
 
         }
