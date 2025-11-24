@@ -11,6 +11,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.mednikov.expensetracking.storage.TokenStorage
+import dev.mednikov.expensetracking.ui.shared.PREFERENCES_FILE_NAME
 import javax.inject.Singleton
 
 @Module
@@ -23,7 +24,7 @@ object DataStorageModule {
         @ApplicationContext context: Context
     ): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
-            produceFile = { context.dataStoreFile("app_prefs.preferences_pb") }
+            produceFile = { context.dataStoreFile(PREFERENCES_FILE_NAME) }
         )
     }
 

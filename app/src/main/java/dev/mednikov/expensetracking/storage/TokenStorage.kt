@@ -4,13 +4,15 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import dev.mednikov.expensetracking.ui.shared.AUTH_TOKEN_PREFERENCES_NAME
+import dev.mednikov.expensetracking.ui.shared.USERID_PREFERENCES_NAME
 import kotlinx.coroutines.flow.map
 
 class TokenStorage(private val dataStore: DataStore<Preferences>) {
 
     companion object {
-        val TOKEN_KEY = stringPreferencesKey("token")
-        val USER_ID_KEY = stringPreferencesKey("userId")
+        val TOKEN_KEY = stringPreferencesKey(AUTH_TOKEN_PREFERENCES_NAME)
+        val USER_ID_KEY = stringPreferencesKey(USERID_PREFERENCES_NAME)
     }
 
     val tokenFlow = dataStore.data.map {it[TOKEN_KEY] }
