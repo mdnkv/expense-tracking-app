@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 
@@ -21,7 +22,7 @@ fun DashboardScreen(navController: NavController) {
         topBar = {
             ApplicationToolBarComponent(
                 title = "Dashboard",
-                onAction = {},
+                onAction = {navController.navigate(NavScreens.CurrentUserScreen.name)},
                 actionType = AppBarActions.USER_ACCOUNT
             )
         }

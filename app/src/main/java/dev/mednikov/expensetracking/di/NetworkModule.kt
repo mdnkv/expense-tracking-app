@@ -5,7 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.mednikov.expensetracking.api.AuthApi
+import dev.mednikov.expensetracking.api.AuthInterceptor
 import dev.mednikov.expensetracking.api.UserApi
+import dev.mednikov.expensetracking.storage.TokenStorage
 import dev.mednikov.expensetracking.ui.shared.BACKEND_API_ROOT
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -18,17 +20,19 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .build()
+    fun provideAuthInterceptor(tokenStorage: TokenStorage): AuthInterceptor {
+        return AuthInterceptor(tokenStorage)
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(
-        client: OkHttpClient
-    ): Retrofit {
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+        return OkHttpClient.Builder().addInterceptor(authInterceptor).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BACKEND_API_ROOT)
             .addConverterFactory(GsonConverterFactory.create())

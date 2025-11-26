@@ -12,4 +12,7 @@ interface AuthApi {
     @Headers("No-Auth: true")
     suspend fun login(@Body payload: LoginRequest): LoginResponse
 
+    @POST("auth/logout")
+    suspend fun logout()
+
 }

@@ -4,6 +4,7 @@ enum class NavScreens {
     HomeScreen,
     LoginScreen,
     SignupScreen,
+    CurrentUserScreen,
     AccountsListScreen,
     DashboardScreen,
     CategoriesListScreen,
@@ -18,6 +19,7 @@ enum class NavScreens {
             DashboardScreen.name -> DashboardScreen
             CategoriesListScreen.name -> CategoriesListScreen
             OperationsListScreen.name -> OperationsListScreen
+            CurrentUserScreen.name -> CurrentUserScreen
             null -> LoginScreen
             else -> throw IllegalArgumentException("Route is not available")
         }

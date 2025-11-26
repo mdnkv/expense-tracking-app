@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import dev.mednikov.expensetracking.ui.screens.dashboard.DashboardScreen
+import dev.mednikov.expensetracking.ui.screens.users.CurrentUserScreen
 
 fun NavGraphBuilder.dashboardNavigation(navController: NavController) {
     navigation(
@@ -13,6 +14,9 @@ fun NavGraphBuilder.dashboardNavigation(navController: NavController) {
     ) {
         composable("dashboard") {
             DashboardScreen(navController)
+        }
+        composable(NavScreens.CurrentUserScreen.name) {
+            CurrentUserScreen(navController)
         }
     }
 }

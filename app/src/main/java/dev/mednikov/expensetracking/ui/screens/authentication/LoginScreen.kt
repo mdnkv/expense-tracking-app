@@ -1,5 +1,6 @@
 package dev.mednikov.expensetracking.ui.screens.authentication
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,13 +23,18 @@ import dev.mednikov.expensetracking.ui.shared.InputFieldComponent
 import dev.mednikov.expensetracking.viewmodel.authentication.LoginViewModel
 
 @Composable
-fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(
+    navController: NavController,
+    loginViewModel: LoginViewModel = hiltViewModel()) {
+
     val loginState by loginViewModel.loginState.collectAsState()
+
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(loginState.success) {
         if (loginState.success){
+            Log.d("LOGINSCREEN", "Login was successful")
             navController.navigate(NavScreens.HomeScreen.name)
         }
     }
