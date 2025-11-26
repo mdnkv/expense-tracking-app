@@ -149,7 +149,7 @@ fun CreateActionButtonComponent(onAction: () -> Unit) {
         onAction()
     }) {
         Icon(
-            painter = painterResource(R.drawable.ui_edit),
+            painter = painterResource(R.drawable.ui_plus),
             contentDescription = "Add",
             modifier = Modifier
                 .width(32.dp)
