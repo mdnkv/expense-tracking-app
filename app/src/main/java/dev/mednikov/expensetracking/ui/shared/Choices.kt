@@ -4,5 +4,6 @@ enum class AppBarActions {
     EDIT,
     LOGOUT,
     USER_ACCOUNT,
-    SEARCH
+    SEARCH,
+    CONFIRM
 }

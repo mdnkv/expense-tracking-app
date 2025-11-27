@@ -90,6 +90,7 @@ fun ApplicationToolBarComponent(
                 AppBarActions.USER_ACCOUNT -> painterResource(R.drawable.ui_user)
                 AppBarActions.EDIT -> painterResource(R.drawable.ui_edit)
                 AppBarActions.SEARCH -> painterResource(R.drawable.ui_search)
+                AppBarActions.CONFIRM -> painterResource(R.drawable.ui_confirm)
             }
             Icon(painter = actionIcon,
                 contentDescription = actionTitle,
