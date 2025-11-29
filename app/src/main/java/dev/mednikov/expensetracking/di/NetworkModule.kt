@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.mednikov.expensetracking.api.AuthApi
 import dev.mednikov.expensetracking.api.AuthInterceptor
+import dev.mednikov.expensetracking.api.CategoryApi
 import dev.mednikov.expensetracking.api.UserApi
 import dev.mednikov.expensetracking.storage.TokenStorage
 import dev.mednikov.expensetracking.ui.shared.BACKEND_API_ROOT
@@ -42,11 +43,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserApi(retrofit: Retrofit): UserApi =
-        retrofit.create(UserApi::class.java)
+    fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
 
     @Provides
     @Singleton
-    fun provideAuthApi(retrofit: Retrofit): AuthApi =
-        retrofit.create(AuthApi::class.java)
+    fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCategoryApi(retrofit: Retrofit): CategoryApi = retrofit.create(CategoryApi::class.java)
 }

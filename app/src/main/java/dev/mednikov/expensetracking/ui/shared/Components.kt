@@ -1,7 +1,10 @@
 package dev.mednikov.expensetracking.ui.shared
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -155,5 +158,37 @@ fun CreateActionButtonComponent(onAction: () -> Unit) {
             modifier = Modifier
                 .width(32.dp)
                 .height(32.dp))
+    }
+}
+
+@Composable
+fun EmptyListPlaceholderComponent(comment: String = "No items found") {
+    Column (
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize().padding(top = 85.dp)
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ui_search),
+            contentDescription = comment,
+            modifier = Modifier.width(64.dp).height(64.dp).padding(bottom = 8.dp)
+        )
+        Text(comment, style = MaterialTheme.typography.bodyLarge)
+    }
+}
+
+@Composable
+fun LoadingPlaceholderComponent() {
+    Column (
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize().padding(top = 85.dp)
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ui_loading),
+            contentDescription = "Please wait...",
+            modifier = Modifier.width(64.dp).height(64.dp).padding(bottom = 8.dp)
+        )
+        Text("Please wait...", style = MaterialTheme.typography.bodyLarge)
     }
 }
