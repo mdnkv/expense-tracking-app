@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import dev.mednikov.expensetracking.ui.screens.categories.CategoriesListScreen
+import dev.mednikov.expensetracking.ui.screens.categories.CategoryCreateScreen
 
 fun NavGraphBuilder.categoryNavigation(navController: NavController) {
     navigation(
@@ -13,6 +14,9 @@ fun NavGraphBuilder.categoryNavigation(navController: NavController) {
     ) {
         composable("categories_list") {
             CategoriesListScreen(navController)
+        }
+        composable (NavScreens.CategoryCreateScreen.name) {
+            CategoryCreateScreen(navController)
         }
     }
 }

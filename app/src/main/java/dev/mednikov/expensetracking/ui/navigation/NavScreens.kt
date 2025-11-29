@@ -8,6 +8,7 @@ enum class NavScreens {
     AccountsListScreen,
     DashboardScreen,
     CategoriesListScreen,
+    CategoryCreateScreen,
     OperationsListScreen;
 
     companion object {
@@ -20,6 +21,7 @@ enum class NavScreens {
             CategoriesListScreen.name -> CategoriesListScreen
             OperationsListScreen.name -> OperationsListScreen
             CurrentUserScreen.name -> CurrentUserScreen
+            CategoryCreateScreen.name -> CategoryCreateScreen
             null -> LoginScreen
             else -> throw IllegalArgumentException("Route is not available")
         }

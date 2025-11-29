@@ -19,15 +19,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.mednikov.expensetracking.models.Category
+import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.CreateActionButtonComponent
 import dev.mednikov.expensetracking.ui.shared.EmptyListPlaceholderComponent
 import dev.mednikov.expensetracking.ui.shared.LoadingPlaceholderComponent
-import dev.mednikov.expensetracking.viewmodel.categories.CategoryViewModel
+import dev.mednikov.expensetracking.viewmodel.categories.CategoriesListViewModel
 
 @Composable
-fun CategoriesListScreen(navController: NavController, viewModel: CategoryViewModel = hiltViewModel()){
+fun CategoriesListScreen(navController: NavController, viewModel: CategoriesListViewModel = hiltViewModel()){
 
     val uiState = viewModel.categoryState
 
@@ -49,7 +50,9 @@ fun CategoryListComponent (navController: NavController, categories: List<Catego
                 actionType = AppBarActions.SEARCH
             )
         },
-        floatingActionButton = { CreateActionButtonComponent(onAction = {}) }
+        floatingActionButton = { CreateActionButtonComponent(onAction = {
+            navController.navigate(NavScreens.CategoryCreateScreen.name)
+        }) }
     ) {paddingValues ->
         LazyColumn (
             verticalArrangement = Arrangement.Top,
