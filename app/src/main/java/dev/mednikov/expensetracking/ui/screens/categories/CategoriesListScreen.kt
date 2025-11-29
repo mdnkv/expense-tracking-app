@@ -13,10 +13,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import dev.mednikov.expensetracking.models.Category
 import dev.mednikov.expensetracking.ui.navigation.NavScreens
@@ -31,6 +35,14 @@ import dev.mednikov.expensetracking.viewmodel.categories.CategoriesListViewModel
 fun CategoriesListScreen(navController: NavController, viewModel: CategoriesListViewModel = hiltViewModel()){
 
     val uiState = viewModel.categoryState
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    LaunchedEffect (Unit) {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.getCategories()
+        }
+    }
+
 
     when {
         uiState.loading -> LoadingPlaceholderComponent()
