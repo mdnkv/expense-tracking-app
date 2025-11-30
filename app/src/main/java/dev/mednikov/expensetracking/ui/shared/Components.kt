@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -29,8 +30,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import dev.mednikov.expensetracking.R
 
 @Composable
@@ -94,6 +97,7 @@ fun ApplicationToolBarComponent(
                 AppBarActions.EDIT -> painterResource(R.drawable.ui_edit)
                 AppBarActions.SEARCH -> painterResource(R.drawable.ui_search)
                 AppBarActions.CONFIRM -> painterResource(R.drawable.ui_confirm)
+                AppBarActions.DELETE -> painterResource(R.drawable.ui_delete)
             }
             Icon(painter = actionIcon,
                 contentDescription = actionTitle,
@@ -162,6 +166,20 @@ fun CreateActionButtonComponent(onAction: () -> Unit) {
 }
 
 @Composable
+fun EditActionButtonComponent(onAction: () -> Unit) {
+    FloatingActionButton (onClick = {
+        onAction()
+    }) {
+        Icon(
+            painter = painterResource(R.drawable.ui_edit),
+            contentDescription = "Edit",
+            modifier = Modifier
+                .width(32.dp)
+                .height(32.dp))
+    }
+}
+
+@Composable
 fun EmptyListPlaceholderComponent(comment: String = "No items found") {
     Column (
         verticalArrangement = Arrangement.Center,
@@ -190,5 +208,26 @@ fun LoadingPlaceholderComponent() {
             modifier = Modifier.width(64.dp).height(64.dp).padding(bottom = 8.dp)
         )
         Text("Please wait...", style = MaterialTheme.typography.bodyLarge)
+    }
+}
+
+@Composable
+fun ItemNotFoundComponent(navController: NavController) {
+    Column (
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize().padding(top = 85.dp)
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ui_error),
+            contentDescription = "Not found",
+            modifier = Modifier.width(64.dp).height(64.dp).padding(bottom = 8.dp)
+        )
+        Text("This item was not found", style = MaterialTheme.typography.bodyLarge)
+        Button(
+            onClick = {navController.popBackStack()},
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp)) {
+            Text("Go back")
+        }
     }
 }

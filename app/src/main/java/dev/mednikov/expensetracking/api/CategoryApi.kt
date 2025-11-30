@@ -22,4 +22,7 @@ interface CategoryApi {
     @GET("categories/user/{userId}")
     suspend fun getCategories (@Path("userId") userId: String): List<Category>
 
+    @GET("categories/category/{id}")
+    suspend fun getCategoryById(@Path("id") id: String): Category
+
 }

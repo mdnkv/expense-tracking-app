@@ -1,6 +1,5 @@
 package dev.mednikov.expensetracking.ui.screens.categories
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -46,7 +45,7 @@ fun CategoriesListScreen(navController: NavController, viewModel: CategoriesList
 
     when {
         uiState.loading -> LoadingPlaceholderComponent()
-        uiState.categories.isEmpty() -> EmptyListPlaceholderComponent(comment = "No categories found")
+//        uiState.categories.isEmpty() -> EmptyListPlaceholderComponent(comment = "No categories found")
         else -> CategoryListComponent(navController, uiState.categories)
     }
 
@@ -66,16 +65,21 @@ fun CategoryListComponent (navController: NavController, categories: List<Catego
             navController.navigate(NavScreens.CategoryCreateScreen.name)
         }) }
     ) {paddingValues ->
-        LazyColumn (
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
-            contentPadding = PaddingValues(vertical = 10.dp, horizontal = 10.dp)
-        ) {
-            items(categories) {category ->
-                CategoryItemComponent(category, navController)
+        if (categories.isEmpty()) {
+            EmptyListPlaceholderComponent(comment = "No categories found")
+        } else {
+            LazyColumn (
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                contentPadding = PaddingValues(vertical = 10.dp, horizontal = 10.dp)
+            ) {
+                items(categories) {category ->
+                    CategoryItemComponent(category, navController)
+                }
             }
         }
+
     }
 }
 
@@ -83,7 +87,7 @@ fun CategoryListComponent (navController: NavController, categories: List<Catego
 fun CategoryItemComponent(category: Category, navController: NavController) {
     Row (
         modifier = Modifier.fillMaxWidth().clickable{
-            Log.d("CATEGORIESSCREEN", category.toString())
+            navController.navigate(NavScreens.CategoryDetailScreen.name + "/${category.id}")
         }
     ) {
         Text(text = category.name, modifier = Modifier.padding(horizontal = 10.dp, vertical = 12.dp))
