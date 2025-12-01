@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.mednikov.expensetracking.models.Category
+import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.ConfirmDialogComponent
@@ -84,7 +85,7 @@ fun CategoryDetailComponent(navController: NavController, category: Category, on
         },
         floatingActionButton = {
             EditActionButtonComponent {
-                // todo
+                navController.navigate(NavScreens.CategoryUpdateScreen.name +"/${category.id!!}")
             }
         }
     ) { paddingValues ->

@@ -13,24 +13,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
-import dev.mednikov.expensetracking.models.Category
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.ConfirmDialogComponent
 import dev.mednikov.expensetracking.ui.shared.InputFieldComponent
-import dev.mednikov.expensetracking.viewmodel.categories.CreateCategoryViewModel
+import dev.mednikov.expensetracking.viewmodel.categories.CategoryUpdateViewModel
 
 @Composable
-fun CategoryCreateScreen(navController: NavController, viewModel: CreateCategoryViewModel = hiltViewModel()) {
+fun CategoryUpdateScreen(navController: NavController, categoryId: String, viewModel: CategoryUpdateViewModel = hiltViewModel()){
     val confirmDialogState = rememberSaveable { mutableStateOf(false) }
     val nameState = rememberSaveable { mutableStateOf("") }
 
     val uiState = viewModel.uiState
 
-    LaunchedEffect(uiState.created) {
-        if (uiState.created) {
+    LaunchedEffect(categoryId) {
+        viewModel.getCategoryById(categoryId)
+    }
+
+    LaunchedEffect(uiState.isUpdated) {
+        if (uiState.isUpdated) {
             navController.popBackStack()
-            viewModel.resetCreated()
+        }
+    }
+
+    LaunchedEffect(uiState.isLoading) {
+        if (!uiState.isLoading && uiState.isExist) {
+            nameState.value = uiState.category!!.name
         }
     }
 
@@ -38,19 +46,19 @@ fun CategoryCreateScreen(navController: NavController, viewModel: CreateCategory
         dialogState = confirmDialogState,
         label = "Do you want to quit without saving?",
         confirmAction = {
-           navController.popBackStack()
+            navController.popBackStack()
         },
         dismissAction = {}
     )
     Scaffold(
         topBar = {
             ApplicationToolBarComponent(
-                title = "Create category",
+                title = "Update category",
                 onAction = {
                     if (nameState.value.isNotEmpty()) {
                         // Create
-                        val payload = Category(name = nameState.value)
-                        viewModel.createCategory(payload)
+                        val payload = uiState.category!!.copy(name = nameState.value)
+                        viewModel.updateCategory(payload)
                     }
                 },
                 actionType = AppBarActions.CONFIRM,
@@ -70,4 +78,6 @@ fun CategoryCreateScreen(navController: NavController, viewModel: CreateCategory
             )
         }
     }
+
+
 }
