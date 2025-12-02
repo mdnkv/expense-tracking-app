@@ -4,9 +4,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.mednikov.expensetracking.api.AccountApi
 import dev.mednikov.expensetracking.api.AuthApi
 import dev.mednikov.expensetracking.api.CategoryApi
 import dev.mednikov.expensetracking.api.UserApi
+import dev.mednikov.expensetracking.repositories.AccountRepository
 import dev.mednikov.expensetracking.repositories.AuthRepository
 import dev.mednikov.expensetracking.repositories.CategoryRepository
 import dev.mednikov.expensetracking.repositories.UserRepository
@@ -33,6 +35,12 @@ object RepositoryModule {
     @Singleton
     fun provideCategoryRepository(api: CategoryApi, tokenStorage: TokenStorage): CategoryRepository {
         return CategoryRepository(api, tokenStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAccountRepository(api: AccountApi, tokenStorage: TokenStorage): AccountRepository {
+        return AccountRepository(api, tokenStorage)
     }
 
 }

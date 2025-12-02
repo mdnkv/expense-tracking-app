@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.mednikov.expensetracking.api.AccountApi
 import dev.mednikov.expensetracking.api.AuthApi
 import dev.mednikov.expensetracking.api.AuthInterceptor
 import dev.mednikov.expensetracking.api.CategoryApi
@@ -52,4 +53,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideCategoryApi(retrofit: Retrofit): CategoryApi = retrofit.create(CategoryApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAccountApi(retrofit: Retrofit): AccountApi = retrofit.create(AccountApi::class.java)
+
 }

@@ -18,10 +18,10 @@ import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.ConfirmDialogComponent
 import dev.mednikov.expensetracking.ui.shared.InputFieldComponent
-import dev.mednikov.expensetracking.viewmodel.categories.CreateCategoryViewModel
+import dev.mednikov.expensetracking.viewmodel.categories.CategoryCreateViewModel
 
 @Composable
-fun CategoryCreateScreen(navController: NavController, viewModel: CreateCategoryViewModel = hiltViewModel()) {
+fun CategoryCreateScreen(navController: NavController, viewModel: CategoryCreateViewModel = hiltViewModel()) {
     val confirmDialogState = rememberSaveable { mutableStateOf(false) }
     val nameState = rememberSaveable { mutableStateOf("") }
 

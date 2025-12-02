@@ -28,12 +28,12 @@ import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.CreateActionButtonComponent
 import dev.mednikov.expensetracking.ui.shared.EmptyListPlaceholderComponent
 import dev.mednikov.expensetracking.ui.shared.LoadingPlaceholderComponent
-import dev.mednikov.expensetracking.viewmodel.categories.CategoriesListViewModel
+import dev.mednikov.expensetracking.viewmodel.categories.CategoryListViewModel
 
 @Composable
-fun CategoriesListScreen(navController: NavController, viewModel: CategoriesListViewModel = hiltViewModel()){
+fun CategoryListScreen(navController: NavController, viewModel: CategoryListViewModel = hiltViewModel()){
 
-    val uiState = viewModel.categoryState
+    val uiState = viewModel.uiState
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 
     LaunchedEffect (Unit) {
@@ -45,7 +45,6 @@ fun CategoriesListScreen(navController: NavController, viewModel: CategoriesList
 
     when {
         uiState.loading -> LoadingPlaceholderComponent()
-//        uiState.categories.isEmpty() -> EmptyListPlaceholderComponent(comment = "No categories found")
         else -> CategoryListComponent(navController, uiState.categories)
     }
 

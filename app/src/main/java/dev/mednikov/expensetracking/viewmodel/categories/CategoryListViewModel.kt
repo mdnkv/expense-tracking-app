@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoriesListViewModel @Inject constructor(private val repository: CategoryRepository): ViewModel() {
+class CategoryListViewModel @Inject constructor(private val repository: CategoryRepository): ViewModel() {
 
-    var categoryState by mutableStateOf(CategoryUiState())
+    var uiState by mutableStateOf(CategoryListUiState())
 
     init {
         getCategories()
@@ -22,16 +22,16 @@ class CategoriesListViewModel @Inject constructor(private val repository: Catego
 
     fun getCategories() {
         viewModelScope.launch {
-            categoryState = categoryState.copy(loading = true)
+            uiState = uiState.copy(loading = true)
             try {
                 val result = repository.getCategories()
-                categoryState = categoryState.copy(
+                uiState = uiState.copy(
                     loading = false,
                     categories = result,
                     error = null
                 )
             } catch (ex: Exception) {
-                categoryState = categoryState.copy(
+                uiState = uiState.copy(
                     loading = false,
                     error = ex.message.toString()
                 )
@@ -42,7 +42,7 @@ class CategoriesListViewModel @Inject constructor(private val repository: Catego
 
 }
 
-data class CategoryUiState(
+data class CategoryListUiState(
     val loading: Boolean = true,
     val categories: List<Category> = emptyList(),
     val error: String? = null

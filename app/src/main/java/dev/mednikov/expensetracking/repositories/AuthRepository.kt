@@ -6,10 +6,7 @@ import dev.mednikov.expensetracking.storage.TokenStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class AuthRepository(
-    private val api: AuthApi,
-    private val storage: TokenStorage
-) {
+class AuthRepository(private val api: AuthApi, private val storage: TokenStorage) {
 
     suspend fun login(payload: LoginRequest): Result<Unit> {
         return try {

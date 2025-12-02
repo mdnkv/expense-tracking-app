@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateCategoryViewModel @Inject constructor(private val repository: CategoryRepository) : ViewModel() {
+class CategoryCreateViewModel @Inject constructor(private val repository: CategoryRepository) : ViewModel() {
 
     var uiState by mutableStateOf(CreateCategoryUiState())
         private set
