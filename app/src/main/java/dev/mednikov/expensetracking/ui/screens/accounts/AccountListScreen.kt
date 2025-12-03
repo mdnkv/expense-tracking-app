@@ -24,6 +24,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import dev.mednikov.expensetracking.models.Account
 import dev.mednikov.expensetracking.models.AccountType
+import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.CreateActionButtonComponent
@@ -62,7 +63,7 @@ fun AccountListComponent(accounts: List<Account>, navController: NavController){
             )
         },
         floatingActionButton = { CreateActionButtonComponent(onAction = {
-            //
+            navController.navigate(NavScreens.AccountCreateScreen.name)
         }) }
     ) {paddingValues ->
         if (accounts.isEmpty()){

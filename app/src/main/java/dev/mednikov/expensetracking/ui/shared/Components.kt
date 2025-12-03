@@ -3,6 +3,7 @@ package dev.mednikov.expensetracking.ui.shared
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -35,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.mednikov.expensetracking.R
+import dev.mednikov.expensetracking.models.AccountType
 
 @Composable
 fun InputFieldComponent (
@@ -230,4 +233,43 @@ fun ItemNotFoundComponent(navController: NavController) {
             Text("Go back")
         }
     }
+}
+
+@Composable
+fun AccountTypeInputComponent(state: MutableState<AccountType>){
+    FlowRow (
+        modifier = Modifier.fillMaxWidth().padding(vertical = 5.dp, horizontal = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        InputChip(
+            onClick = {state.value = AccountType.CASH},
+            label = {
+                Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "Cash")
+                }
+            },
+            selected = state.value == AccountType.CASH
+        )
+        InputChip(
+            onClick = {state.value = AccountType.CREDIT_CARD},
+            label = {
+                Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "Credit card")
+                }
+            },
+            selected = state.value == AccountType.CREDIT_CARD
+        )
+        InputChip(
+            onClick = {state.value = AccountType.BANK_ACCOUNT},
+            label = {
+                Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "Bank account")
+                }
+            },
+            selected = state.value == AccountType.BANK_ACCOUNT
+        )
+
+    }
+
 }
