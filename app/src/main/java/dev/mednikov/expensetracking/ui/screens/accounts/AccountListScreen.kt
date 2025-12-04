@@ -87,7 +87,7 @@ fun AccountListComponent(accounts: List<Account>, navController: NavController){
 fun AccountItemComponent (account: Account, navController: NavController){
     Row (
         modifier = Modifier.fillMaxWidth().clickable{
-            //
+            navController.navigate("${NavScreens.AccountDetailScreen.name}/${account.id}")
         },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

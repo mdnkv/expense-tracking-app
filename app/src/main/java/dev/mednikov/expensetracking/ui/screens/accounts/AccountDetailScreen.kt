@@ -1,4 +1,4 @@
-package dev.mednikov.expensetracking.ui.screens.categories
+package dev.mednikov.expensetracking.ui.screens.accounts
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,28 +17,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
-import dev.mednikov.expensetracking.models.Category
-import dev.mednikov.expensetracking.ui.navigation.NavScreens
+import dev.mednikov.expensetracking.models.Account
+import dev.mednikov.expensetracking.models.AccountType
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.ConfirmDialogComponent
 import dev.mednikov.expensetracking.ui.shared.EditActionButtonComponent
 import dev.mednikov.expensetracking.ui.shared.ItemNotFoundComponent
 import dev.mednikov.expensetracking.ui.shared.LoadingPlaceholderComponent
-import dev.mednikov.expensetracking.viewmodel.categories.CategoryDetailViewModel
+import dev.mednikov.expensetracking.viewmodel.accounts.AccountDetailViewModel
 
 @Composable
-fun CategoryDetailScreen(
+fun AccountDetailScreen(
     navController: NavController,
-    categoryId: String,
-    viewModel: CategoryDetailViewModel = hiltViewModel()
-){
+    accountId: String,
+    viewModel: AccountDetailViewModel = hiltViewModel()) {
 
-    val uiState = viewModel.categoryUiState
+    val detailState = viewModel.detailUiState
     val deleteState = viewModel.deleteUiState
 
-    LaunchedEffect(categoryId) {
-        viewModel.getCategoryById(categoryId)
+    LaunchedEffect(accountId) {
+        viewModel.getAccountById(accountId)
     }
 
     LaunchedEffect(deleteState) {
@@ -48,22 +47,21 @@ fun CategoryDetailScreen(
     }
 
     when {
-        uiState.isLoading -> LoadingPlaceholderComponent()
-        !uiState.isExist -> ItemNotFoundComponent(navController)
-        uiState.error != null -> ItemNotFoundComponent(navController)
-        else -> CategoryDetailComponent(navController = navController, category = uiState.category!!) {
-            viewModel.deleteCategory(categoryId)
+        detailState.isLoading -> LoadingPlaceholderComponent()
+        !detailState.isExist -> ItemNotFoundComponent(navController)
+        detailState.error != null -> ItemNotFoundComponent(navController)
+        else -> AccountDetailComponent (navController = navController, account = detailState.account!!) {
+            viewModel.deleteAccount(accountId)
         }
     }
-
 }
 
 @Composable
-fun CategoryDetailComponent(navController: NavController, category: Category, onDelete: () -> Unit) {
+fun AccountDetailComponent(navController: NavController, account: Account, onDelete:() -> Unit){
     val deleteDialogState = rememberSaveable { mutableStateOf(false) }
     ConfirmDialogComponent (
         dialogState = deleteDialogState,
-        label = "Do you want to delete this category?",
+        label = "Do you want to delete this account?",
         confirmAction = {
             onDelete()
         },
@@ -72,7 +70,7 @@ fun CategoryDetailComponent(navController: NavController, category: Category, on
     Scaffold (
         topBar = {
             ApplicationToolBarComponent(
-                title = "Category detail",
+                title = "Account detail",
                 onBack = {
                     navController.popBackStack()
                 },
@@ -85,7 +83,7 @@ fun CategoryDetailComponent(navController: NavController, category: Category, on
         },
         floatingActionButton = {
             EditActionButtonComponent {
-                navController.navigate(NavScreens.CategoryUpdateScreen.name +"/${category.id!!}")
+                //
             }
         }
     ) { paddingValues ->
@@ -94,14 +92,25 @@ fun CategoryDetailComponent(navController: NavController, category: Category, on
             horizontalAlignment = Alignment.Start,
             modifier = Modifier.fillMaxSize().padding(paddingValues)
         ) {
-            Text(text = "Category name",
+            Text(text = "Account name",
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
                 style = MaterialTheme.typography.bodySmall)
-            Text(text = category.name,
+            Text(text = account.name,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
+                style = MaterialTheme.typography.bodyLarge)
+
+            Text(text = "Account type",
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
+                style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = when(account.type){
+                    AccountType.BANK_ACCOUNT -> "Bank"
+                    AccountType.CASH -> "Cash"
+                    AccountType.CREDIT_CARD -> "Card"
+                },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
                 style = MaterialTheme.typography.bodyLarge)
 
         }
     }
-
 }
