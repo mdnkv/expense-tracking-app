@@ -19,6 +19,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.mednikov.expensetracking.models.Account
 import dev.mednikov.expensetracking.models.AccountType
+import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.ConfirmDialogComponent
@@ -83,7 +84,7 @@ fun AccountDetailComponent(navController: NavController, account: Account, onDel
         },
         floatingActionButton = {
             EditActionButtonComponent {
-                //
+                navController.navigate("${NavScreens.AccountUpdateScreen.name}/${account.id!!}")
             }
         }
     ) { paddingValues ->

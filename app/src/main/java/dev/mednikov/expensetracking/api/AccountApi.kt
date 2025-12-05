@@ -14,7 +14,7 @@ interface AccountApi {
     suspend fun createAccount(@Body payload: Account): Account
 
     @PUT("accounts/update")
-    suspend fun updateAccount(payload: Account): Account
+    suspend fun updateAccount(@Body payload: Account): Account
 
     @DELETE("accounts/delete/{id}")
     suspend fun deleteAccount (@Path("id") id: String)

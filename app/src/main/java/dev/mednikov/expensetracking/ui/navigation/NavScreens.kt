@@ -8,6 +8,7 @@ enum class NavScreens {
     AccountsListScreen,
     AccountCreateScreen,
     AccountDetailScreen,
+    AccountUpdateScreen,
     DashboardScreen,
     CategoriesListScreen,
     CategoryCreateScreen,

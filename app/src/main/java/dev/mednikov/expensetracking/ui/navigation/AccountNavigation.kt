@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import dev.mednikov.expensetracking.ui.screens.accounts.AccountCreateScreen
 import dev.mednikov.expensetracking.ui.screens.accounts.AccountDetailScreen
 import dev.mednikov.expensetracking.ui.screens.accounts.AccountListScreen
+import dev.mednikov.expensetracking.ui.screens.accounts.AccountUpdateScreen
 
 fun NavGraphBuilder.accountNavigation(navController: NavController) {
     navigation(
@@ -28,6 +29,15 @@ fun NavGraphBuilder.accountNavigation(navController: NavController) {
         )) { backStackEntry ->
             backStackEntry.arguments?.getString("accountId").let {
                 AccountDetailScreen(navController, accountId = it.toString())
+            }
+        }
+        composable ("${NavScreens.AccountUpdateScreen.name}/{accountId}", arguments = listOf(
+            navArgument(name = "accountId") {
+                type = NavType.StringType
+            }
+        )) { backStackEntry ->
+            backStackEntry.arguments?.getString("accountId").let {
+                AccountUpdateScreen(navController, accountId = it.toString())
             }
 
         }

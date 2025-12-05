@@ -1,4 +1,4 @@
-package dev.mednikov.expensetracking.ui.screens.categories
+package dev.mednikov.expensetracking.ui.screens.accounts
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,21 +13,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.mednikov.expensetracking.models.AccountType
+import dev.mednikov.expensetracking.ui.shared.AccountTypeInputComponent
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.ConfirmDialogComponent
 import dev.mednikov.expensetracking.ui.shared.InputFieldComponent
-import dev.mednikov.expensetracking.viewmodel.categories.CategoryUpdateViewModel
+import dev.mednikov.expensetracking.viewmodel.accounts.AccountUpdateViewModel
 
 @Composable
-fun CategoryUpdateScreen(navController: NavController, categoryId: String, viewModel: CategoryUpdateViewModel = hiltViewModel()){
+fun AccountUpdateScreen(
+    navController: NavController,
+    accountId: String,
+    viewModel: AccountUpdateViewModel = hiltViewModel()
+){
     val confirmDialogState = rememberSaveable { mutableStateOf(false) }
     val nameState = rememberSaveable { mutableStateOf("") }
+    val typeState = rememberSaveable { mutableStateOf(AccountType.CASH) }
 
     val uiState = viewModel.uiState
 
-    LaunchedEffect(categoryId) {
-        viewModel.getCategoryById(categoryId)
+    LaunchedEffect(accountId) {
+        viewModel.getAccountById(accountId)
     }
 
     LaunchedEffect(uiState.isUpdated) {
@@ -38,7 +45,8 @@ fun CategoryUpdateScreen(navController: NavController, categoryId: String, viewM
 
     LaunchedEffect(uiState.isLoading) {
         if (!uiState.isLoading && uiState.isExist) {
-            nameState.value = uiState.category!!.name
+            nameState.value = uiState.account!!.name
+            typeState.value = uiState.account.type
         }
     }
 
@@ -50,14 +58,18 @@ fun CategoryUpdateScreen(navController: NavController, categoryId: String, viewM
         },
         dismissAction = {}
     )
+
     Scaffold(
         topBar = {
             ApplicationToolBarComponent(
-                title = "Update category",
+                title = "Update account",
                 onAction = {
                     if (nameState.value.isNotEmpty()) {
-                        val payload = uiState.category!!.copy(name = nameState.value)
-                        viewModel.updateCategory(payload)
+                        val payload = uiState.account!!.copy(
+                            name = nameState.value,
+                            type = typeState.value
+                        )
+                        viewModel.updateAccount(payload)
                     }
                 },
                 actionType = AppBarActions.CONFIRM,
@@ -75,8 +87,7 @@ fun CategoryUpdateScreen(navController: NavController, categoryId: String, viewM
                 label = "Name",
                 state = nameState
             )
+            AccountTypeInputComponent(state = typeState)
         }
     }
-
-
 }
