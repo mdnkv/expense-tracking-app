@@ -7,10 +7,12 @@ import dagger.hilt.components.SingletonComponent
 import dev.mednikov.expensetracking.api.AccountApi
 import dev.mednikov.expensetracking.api.AuthApi
 import dev.mednikov.expensetracking.api.CategoryApi
+import dev.mednikov.expensetracking.api.CurrencyApi
 import dev.mednikov.expensetracking.api.UserApi
 import dev.mednikov.expensetracking.repositories.AccountRepository
 import dev.mednikov.expensetracking.repositories.AuthRepository
 import dev.mednikov.expensetracking.repositories.CategoryRepository
+import dev.mednikov.expensetracking.repositories.CurrencyRepository
 import dev.mednikov.expensetracking.repositories.UserRepository
 import dev.mednikov.expensetracking.storage.TokenStorage
 import javax.inject.Singleton
@@ -41,6 +43,12 @@ object RepositoryModule {
     @Singleton
     fun provideAccountRepository(api: AccountApi, tokenStorage: TokenStorage): AccountRepository {
         return AccountRepository(api, tokenStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCurrencyRepository(api: CurrencyApi, tokenStorage: TokenStorage): CurrencyRepository {
+        return CurrencyRepository(api, tokenStorage)
     }
 
 }

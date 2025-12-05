@@ -8,6 +8,7 @@ import dev.mednikov.expensetracking.api.AccountApi
 import dev.mednikov.expensetracking.api.AuthApi
 import dev.mednikov.expensetracking.api.AuthInterceptor
 import dev.mednikov.expensetracking.api.CategoryApi
+import dev.mednikov.expensetracking.api.CurrencyApi
 import dev.mednikov.expensetracking.api.UserApi
 import dev.mednikov.expensetracking.storage.TokenStorage
 import dev.mednikov.expensetracking.ui.shared.BACKEND_API_ROOT
@@ -57,5 +58,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideAccountApi(retrofit: Retrofit): AccountApi = retrofit.create(AccountApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCurrencyApi(retrofit: Retrofit): CurrencyApi = retrofit.create(CurrencyApi::class.java)
 
 }
