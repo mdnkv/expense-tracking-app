@@ -332,3 +332,19 @@ fun DateInputComponent(state: MutableState<LocalDate>) {
     }
 
 }
+
+@Composable
+fun DetailSectionComponent(label: String, value: String){
+    Column (
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(text = label,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
+            style = MaterialTheme.typography.bodySmall)
+        Text(text = value,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
+            style = MaterialTheme.typography.bodyLarge)
+    }
+}

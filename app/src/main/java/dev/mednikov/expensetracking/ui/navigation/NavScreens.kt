@@ -15,6 +15,7 @@ enum class NavScreens {
     CategoryDetailScreen,
     CategoryUpdateScreen,
     OperationCreateScreen,
+    OperationDetailScreen,
     OperationsListScreen;
 
 }

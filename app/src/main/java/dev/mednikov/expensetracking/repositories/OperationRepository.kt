@@ -5,6 +5,7 @@ import dev.mednikov.expensetracking.models.Currency
 import dev.mednikov.expensetracking.models.Operation
 import dev.mednikov.expensetracking.storage.TokenStorage
 import kotlinx.coroutines.flow.firstOrNull
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class OperationRepository @Inject constructor(
@@ -30,6 +31,18 @@ class OperationRepository @Inject constructor(
     suspend fun getOperations(): List<Operation> {
         val userId = getUserId()
         return operationApi.getOperations(userId)
+    }
+
+    suspend fun getOperation(id: String): Operation? {
+        return try {
+            operationApi.getOperationById(id)
+        } catch(ex: HttpException) {
+            if (ex.code() == 404) null else throw ex
+        }
+    }
+
+    suspend fun deleteOperation(id: String){
+        operationApi.deleteOperation(id)
     }
 
 }

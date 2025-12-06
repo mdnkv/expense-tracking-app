@@ -29,6 +29,7 @@ import dev.mednikov.expensetracking.models.Account
 import dev.mednikov.expensetracking.models.Category
 import dev.mednikov.expensetracking.models.Operation
 import dev.mednikov.expensetracking.models.OperationType
+import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import org.joda.money.CurrencyUnit
 import org.joda.money.Money
 import java.math.BigDecimal
@@ -44,7 +45,7 @@ fun OperationItemComponent(operation: Operation, navController: NavController) {
     val amountText = amountMonetary.toString()
 
     Column (modifier = Modifier.fillMaxWidth().clickable{
-        // todo
+        navController.navigate("${NavScreens.OperationDetailScreen.name}/${operation.id!!}")
     },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top) {
