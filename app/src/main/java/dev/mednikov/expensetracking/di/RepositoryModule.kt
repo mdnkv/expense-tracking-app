@@ -8,11 +8,13 @@ import dev.mednikov.expensetracking.api.AccountApi
 import dev.mednikov.expensetracking.api.AuthApi
 import dev.mednikov.expensetracking.api.CategoryApi
 import dev.mednikov.expensetracking.api.CurrencyApi
+import dev.mednikov.expensetracking.api.OperationApi
 import dev.mednikov.expensetracking.api.UserApi
 import dev.mednikov.expensetracking.repositories.AccountRepository
 import dev.mednikov.expensetracking.repositories.AuthRepository
 import dev.mednikov.expensetracking.repositories.CategoryRepository
 import dev.mednikov.expensetracking.repositories.CurrencyRepository
+import dev.mednikov.expensetracking.repositories.OperationRepository
 import dev.mednikov.expensetracking.repositories.UserRepository
 import dev.mednikov.expensetracking.storage.TokenStorage
 import javax.inject.Singleton
@@ -51,4 +53,13 @@ object RepositoryModule {
         return CurrencyRepository(api, tokenStorage)
     }
 
+    @Provides
+    @Singleton
+    fun provideOperationRepository(api: OperationApi, currencyRepository: CurrencyRepository, tokenStorage: TokenStorage): OperationRepository {
+        return OperationRepository(
+            operationApi = api,
+            currencyRepository = currencyRepository,
+            tokenStorage = tokenStorage
+        )
+    }
 }

@@ -10,7 +10,7 @@ class CurrencyRepository @Inject constructor(val currencyApi: CurrencyApi, val s
 
     private suspend fun getUserId(): String = storage.userIdFlow.firstOrNull().toString()
 
-    suspend fun getCurrrencies(): List<Currency> {
+    suspend fun getCurrencies(): List<Currency> {
         val userId = getUserId()
         return currencyApi.getCurrencies(userId)
     }
