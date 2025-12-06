@@ -1,6 +1,5 @@
 package dev.mednikov.expensetracking.viewmodel.operations
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -30,7 +29,6 @@ class OperationListViewModel @Inject constructor(private val operationRepository
                     isLoading = false
                 )
             } catch (ex: Exception){
-                Log.d("OperationListViewModel", ex.message.toString())
                 uiState = uiState.copy(
                     isLoading = false,
                     error = ex.message.toString()

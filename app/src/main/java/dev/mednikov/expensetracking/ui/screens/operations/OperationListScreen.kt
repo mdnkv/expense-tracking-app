@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import dev.mednikov.expensetracking.models.Operation
+import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.CreateActionButtonComponent
@@ -53,7 +54,10 @@ fun OperationListComponent(operations: List<Operation>, navController: NavContro
                 actionType = AppBarActions.SEARCH
             )
         },
-        floatingActionButton = { CreateActionButtonComponent(onAction = {}) }
+        floatingActionButton = { CreateActionButtonComponent(onAction = {
+            navController.navigate(
+            NavScreens.OperationCreateScreen.name)
+        })}
     ) {paddingValues ->
         if (operations.isEmpty()){
             EmptyListPlaceholderComponent(comment = "No operations found")

@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import dev.mednikov.expensetracking.ui.screens.operations.OperationCreateScreen
 import dev.mednikov.expensetracking.ui.screens.operations.OperationListScreen
 
 fun NavGraphBuilder.operationNavigation(navController: NavController) {
@@ -13,6 +14,9 @@ fun NavGraphBuilder.operationNavigation(navController: NavController) {
     ) {
         composable("operations_list") {
             OperationListScreen(navController)
+        }
+        composable(NavScreens.OperationCreateScreen.name){
+            OperationCreateScreen(navController)
         }
     }
 }

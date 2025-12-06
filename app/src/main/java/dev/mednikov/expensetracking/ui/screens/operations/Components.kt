@@ -3,23 +3,35 @@ package dev.mednikov.expensetracking.ui.screens.operations
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import dev.mednikov.expensetracking.models.Account
+import dev.mednikov.expensetracking.models.Category
 import dev.mednikov.expensetracking.models.Operation
 import dev.mednikov.expensetracking.models.OperationType
 import org.joda.money.CurrencyUnit
 import org.joda.money.Money
+import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -85,4 +97,103 @@ fun OperationItemComponent(operation: Operation, navController: NavController) {
         }
 
     }
+}
+
+@Composable
+fun OperationTypeInputComponent(state: MutableState<OperationType>){
+    Column (modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
+        Text(text = "Operation type", style = MaterialTheme.typography.bodyMedium )
+        FlowRow (
+            modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            InputChip(
+                onClick = {state.value = OperationType.INCOME},
+                label = {
+                    Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = "Income")
+                    }
+                },
+                selected = state.value == OperationType.INCOME
+            )
+            InputChip(
+                onClick = {state.value = OperationType.EXPENSE},
+                label = {
+                    Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = "Expense")
+                    }
+                },
+                selected = state.value == OperationType.EXPENSE
+            )
+
+        }
+    }
+}
+
+@Composable
+fun OperationAccountSelectComponent(state: MutableState<String>, accounts: List<Account>){
+    if (accounts.isEmpty()){
+        Text(text = "Cannot load accounts", style = MaterialTheme.typography.bodyMedium )
+    } else {
+        Column (modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
+            Text(text = "Account", style = MaterialTheme.typography.bodyMedium )
+            FlowRow (
+                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                accounts.forEach { account ->
+                    InputChip(
+                        onClick = { state.value = account.id!! },
+                        label = { Text(text = account.name) },
+                        selected = state.value == account.id!!
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun OperationCategorySelectComponent(state: MutableState<String>, categories: List<Category>){
+    if (categories.isEmpty()){
+        Text(text = "Cannot load categories", style = MaterialTheme.typography.bodyMedium )
+    } else {
+        Column (modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
+            Text(text = "Category", style = MaterialTheme.typography.bodyMedium )
+            FlowRow (
+                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                categories.forEach { category ->
+                    InputChip(
+                        onClick = { state.value = category.id!! },
+                        label = { Text(text = category.name) },
+                        selected = state.value == category.id!!
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun AmountInputComponent (
+    state: MutableState<BigDecimal>,
+    imeAction: ImeAction = ImeAction.Done
+) {
+    OutlinedTextField(
+        value = state.value.toString(),
+        onValueChange = {state.value = BigDecimal(it)},
+        label = { Text(text = "Amount") },
+        singleLine = true,
+        textStyle = TextStyle(fontSize = 16.sp, color = MaterialTheme.colorScheme.onBackground),
+        modifier = Modifier
+            .padding(vertical = 5.dp, horizontal = 12.dp)
+            .fillMaxWidth(),
+        enabled = true,
+        keyboardOptions = KeyboardOptions(keyboardType= KeyboardType.Number, imeAction = imeAction)
+    )
 }
