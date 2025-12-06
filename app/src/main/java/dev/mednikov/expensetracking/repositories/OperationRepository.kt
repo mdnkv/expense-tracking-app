@@ -45,4 +45,8 @@ class OperationRepository @Inject constructor(
         operationApi.deleteOperation(id)
     }
 
+    suspend fun updateOperation(payload: Operation): Operation{
+        return operationApi.updateOperation(payload)
+    }
+
 }

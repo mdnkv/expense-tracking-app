@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import dev.mednikov.expensetracking.ui.screens.operations.OperationCreateScreen
 import dev.mednikov.expensetracking.ui.screens.operations.OperationDetailScreen
 import dev.mednikov.expensetracking.ui.screens.operations.OperationListScreen
+import dev.mednikov.expensetracking.ui.screens.operations.OperationUpdateScreen
 
 fun NavGraphBuilder.operationNavigation(navController: NavController) {
     navigation(
@@ -28,6 +29,15 @@ fun NavGraphBuilder.operationNavigation(navController: NavController) {
         )) { backStackEntry ->
             backStackEntry.arguments?.getString("operationId").let {
                 OperationDetailScreen(navController, operationId = it.toString())
+            }
+        }
+        composable ("${NavScreens.OperationUpdateScreen.name}/{operationId}", arguments = listOf(
+            navArgument(name = "operationId") {
+                type = NavType.StringType
+            }
+        )) { backStackEntry ->
+            backStackEntry.arguments?.getString("operationId").let {
+                OperationUpdateScreen(navController, operationId = it.toString())
             }
 
         }

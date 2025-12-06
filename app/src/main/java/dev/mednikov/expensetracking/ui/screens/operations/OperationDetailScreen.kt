@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.mednikov.expensetracking.models.Operation
+import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.ConfirmDialogComponent
@@ -85,7 +86,7 @@ fun OperationDetailComponent(navController: NavController, operation: Operation,
         },
         floatingActionButton = {
             EditActionButtonComponent {
-                //
+                navController.navigate("${NavScreens.OperationUpdateScreen.name}/${operation.id!!}")
             }
         }
     ) { paddingValues ->
