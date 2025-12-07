@@ -30,19 +30,19 @@ import dev.mednikov.expensetracking.models.Category
 import dev.mednikov.expensetracking.models.Operation
 import dev.mednikov.expensetracking.models.OperationType
 import dev.mednikov.expensetracking.ui.navigation.NavScreens
-import org.joda.money.CurrencyUnit
-import org.joda.money.Money
+import dev.mednikov.expensetracking.ui.shared.getDateText
+import dev.mednikov.expensetracking.ui.shared.getMoneyText
 import java.math.BigDecimal
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun OperationItemComponent(operation: Operation, navController: NavController) {
-    val dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy")
-    val dateText: String = operation.date.format(dateFormatter)
+//    val dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy")
+//    val dateText: String = operation.date.format(dateFormatter)
 
-    val currencyUnit = CurrencyUnit.of(operation.currency!!.code)
-    val amountMonetary = Money.of(currencyUnit, operation.amount)
-    val amountText = amountMonetary.toString()
+//    val currencyUnit = CurrencyUnit.of(operation.currency!!.code)
+//    val amountMonetary = Money.of(currencyUnit, operation.amount)
+    val dateText = getDateText(operation.date)
+    val amountText = getMoneyText(operation.amount, operation.currency!!)
 
     Column (modifier = Modifier.fillMaxWidth().clickable{
         navController.navigate("${NavScreens.OperationDetailScreen.name}/${operation.id!!}")

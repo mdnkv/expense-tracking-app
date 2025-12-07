@@ -22,10 +22,9 @@ import dev.mednikov.expensetracking.ui.shared.DetailSectionComponent
 import dev.mednikov.expensetracking.ui.shared.EditActionButtonComponent
 import dev.mednikov.expensetracking.ui.shared.ItemNotFoundComponent
 import dev.mednikov.expensetracking.ui.shared.LoadingPlaceholderComponent
+import dev.mednikov.expensetracking.ui.shared.getDateText
+import dev.mednikov.expensetracking.ui.shared.getMoneyText
 import dev.mednikov.expensetracking.viewmodel.operations.OperationDetailViewModel
-import org.joda.money.CurrencyUnit
-import org.joda.money.Money
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun OperationDetailScreen (navController: NavController, operationId: String, viewModel: OperationDetailViewModel = hiltViewModel()) {
@@ -55,12 +54,12 @@ fun OperationDetailScreen (navController: NavController, operationId: String, vi
 @Composable
 fun OperationDetailComponent(navController: NavController, operation: Operation, onDelete: ()->Unit){
     val deleteDialogState = rememberSaveable { mutableStateOf(false) }
-    val dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy")
-    val dateText: String = operation.date.format(dateFormatter)
+//    val dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy")
+    val dateText: String = getDateText(operation.date)
 
-    val currencyUnit = CurrencyUnit.of(operation.currency!!.code)
-    val amountMonetary = Money.of(currencyUnit, operation.amount)
-    val amountText = amountMonetary.toString()
+//    val currencyUnit = CurrencyUnit.of(operation.currency!!.code)
+//    val amountMonetary = Money.of(currencyUnit, operation.amount)
+    val amountText = getMoneyText(operation.amount, operation.currency!!)
 
     ConfirmDialogComponent (
         dialogState = deleteDialogState,

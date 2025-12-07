@@ -38,9 +38,11 @@ fun CurrentUserScreen(
 
     LaunchedEffect(currentUserUiState.isLoading) {
         if (!currentUserUiState.isLoading) {
-            val user = currentUserUiState.user!!
-            firstNameState.value = user.firstName
-            lastNameState.value = user.lastName
+            if (currentUserUiState.user != null){
+                val user = currentUserUiState.user
+                firstNameState.value = user.firstName
+                lastNameState.value = user.lastName
+            }
         }
     }
 
@@ -49,11 +51,13 @@ fun CurrentUserScreen(
             ApplicationToolBarComponent(
                 title = "My account",
                 onAction = {
-                    val payload = currentUserUiState.user!!.copy(
-                        firstName = firstNameState.value,
-                        lastName = lastNameState.value
-                    )
-                    currentUserViewModel.updateUser(payload)
+                    if (currentUserUiState.user != null){
+                        val payload = currentUserUiState.user.copy(
+                            firstName = firstNameState.value,
+                            lastName = lastNameState.value
+                        )
+                        currentUserViewModel.updateUser(payload)
+                    }
                 },
                 onBack = {navController.popBackStack()},
                 showBackButton = true,

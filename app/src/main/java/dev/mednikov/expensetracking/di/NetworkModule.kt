@@ -10,6 +10,7 @@ import dev.mednikov.expensetracking.api.AuthApi
 import dev.mednikov.expensetracking.api.AuthInterceptor
 import dev.mednikov.expensetracking.api.CategoryApi
 import dev.mednikov.expensetracking.api.CurrencyApi
+import dev.mednikov.expensetracking.api.DashboardApi
 import dev.mednikov.expensetracking.api.DateSerializer
 import dev.mednikov.expensetracking.api.OperationApi
 import dev.mednikov.expensetracking.api.UserApi
@@ -73,5 +74,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOperationApi(retrofit: Retrofit): OperationApi = retrofit.create(OperationApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDashboardApi(retrofit: Retrofit): DashboardApi = retrofit.create(DashboardApi::class.java)
 
 }
