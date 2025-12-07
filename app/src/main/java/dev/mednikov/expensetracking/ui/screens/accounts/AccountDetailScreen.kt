@@ -3,18 +3,14 @@ package dev.mednikov.expensetracking.ui.screens.accounts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.mednikov.expensetracking.models.Account
@@ -23,6 +19,7 @@ import dev.mednikov.expensetracking.ui.navigation.NavScreens
 import dev.mednikov.expensetracking.ui.shared.AppBarActions
 import dev.mednikov.expensetracking.ui.shared.ApplicationToolBarComponent
 import dev.mednikov.expensetracking.ui.shared.ConfirmDialogComponent
+import dev.mednikov.expensetracking.ui.shared.DetailSectionComponent
 import dev.mednikov.expensetracking.ui.shared.EditActionButtonComponent
 import dev.mednikov.expensetracking.ui.shared.ItemNotFoundComponent
 import dev.mednikov.expensetracking.ui.shared.LoadingPlaceholderComponent
@@ -93,25 +90,12 @@ fun AccountDetailComponent(navController: NavController, account: Account, onDel
             horizontalAlignment = Alignment.Start,
             modifier = Modifier.fillMaxSize().padding(paddingValues)
         ) {
-            Text(text = "Account name",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
-                style = MaterialTheme.typography.bodySmall)
-            Text(text = account.name,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
-                style = MaterialTheme.typography.bodyLarge)
-
-            Text(text = "Account type",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
-                style = MaterialTheme.typography.bodySmall)
-            Text(
-                text = when(account.type){
-                    AccountType.BANK_ACCOUNT -> "Bank"
-                    AccountType.CASH -> "Cash"
-                    AccountType.CREDIT_CARD -> "Card"
-                },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 16.dp),
-                style = MaterialTheme.typography.bodyLarge)
-
+            DetailSectionComponent(label = "Account name", value = account.name)
+            DetailSectionComponent(label = "Account type", value = when(account.type){
+                AccountType.BANK_ACCOUNT -> "Bank"
+                AccountType.CASH -> "Cash"
+                AccountType.CREDIT_CARD -> "Card"
+            })
         }
     }
 }
