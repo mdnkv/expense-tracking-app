@@ -25,8 +25,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userApi: UserApi): UserRepository {
-        return UserRepository(userApi)
+    fun provideUserRepository(userApi: UserApi, tokenStorage: TokenStorage): UserRepository {
+        return UserRepository(userApi, tokenStorage)
     }
 
     @Provides
