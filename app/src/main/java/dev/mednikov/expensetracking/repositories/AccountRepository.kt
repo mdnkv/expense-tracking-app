@@ -8,15 +8,13 @@ import retrofit2.HttpException
 
 class AccountRepository(private val api: AccountApi, private val storage: TokenStorage) {
 
-    private suspend fun getUserId(): String = storage.userIdFlow.firstOrNull().toString()
-
     suspend fun getAccounts(): List<Account>{
-        val userId = getUserId()
+        val userId = storage.userIdFlow.firstOrNull().toString()
         return api.getAccounts(userId)
     }
 
     suspend fun createAccount(payload: Account): Account{
-        val userId = getUserId()
+        val userId = storage.userIdFlow.firstOrNull().toString()
         payload.userId = userId
         return api.createAccount(payload)
     }

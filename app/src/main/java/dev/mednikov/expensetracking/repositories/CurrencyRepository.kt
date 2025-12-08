@@ -8,10 +8,8 @@ import javax.inject.Inject
 
 class CurrencyRepository @Inject constructor(val currencyApi: CurrencyApi, val storage: TokenStorage) {
 
-    private suspend fun getUserId(): String = storage.userIdFlow.firstOrNull().toString()
-
     suspend fun getCurrencies(): List<Currency> {
-        val userId = getUserId()
+        val userId = storage.userIdFlow.firstOrNull().toString()
         return currencyApi.getCurrencies(userId)
     }
 

@@ -9,15 +9,13 @@ import javax.inject.Inject
 
 class CategoryRepository @Inject constructor(private val api: CategoryApi, private val storage: TokenStorage) {
 
-    private suspend fun getUserId(): String = storage.userIdFlow.firstOrNull().toString()
-
     suspend fun getCategories(): List<Category> {
-        val userId = getUserId()
+        val userId = storage.userIdFlow.firstOrNull().toString()
         return api.getCategories(userId)
     }
 
     suspend fun createCategory (payload: Category): Category {
-        val userId = getUserId()
+        val userId = storage.userIdFlow.firstOrNull().toString()
         payload.userId = userId
         return api.createCategory(payload)
     }

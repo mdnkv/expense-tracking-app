@@ -39,7 +39,6 @@ fun NavGraphBuilder.accountNavigation(navController: NavController) {
             backStackEntry.arguments?.getString("accountId").let {
                 AccountUpdateScreen(navController, accountId = it.toString())
             }
-
         }
     }
 }

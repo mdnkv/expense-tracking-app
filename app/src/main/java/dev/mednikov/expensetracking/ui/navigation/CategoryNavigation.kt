@@ -30,7 +30,6 @@ fun NavGraphBuilder.categoryNavigation(navController: NavController) {
             backStackEntry.arguments?.getString("categoryId").let {
                 CategoryDetailScreen(navController, categoryId = it.toString())
             }
-
         }
         composable ("${NavScreens.CategoryUpdateScreen.name}/{categoryId}", arguments = listOf(
             navArgument(name = "categoryId") {
@@ -40,7 +39,6 @@ fun NavGraphBuilder.categoryNavigation(navController: NavController) {
             backStackEntry.arguments?.getString("categoryId").let {
                 CategoryUpdateScreen(navController, categoryId = it.toString())
             }
-
         }
     }
 }

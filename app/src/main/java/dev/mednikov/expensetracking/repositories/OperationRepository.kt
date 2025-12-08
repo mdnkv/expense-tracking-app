@@ -13,15 +13,13 @@ class OperationRepository @Inject constructor(
     private val currencyRepository: CurrencyRepository,
     private val tokenStorage: TokenStorage
 ) {
-
-    private suspend fun getUserId(): String = tokenStorage.userIdFlow.firstOrNull().toString()
     private suspend fun getCurrency(): Currency {
         val currencies = currencyRepository.getCurrencies()
         return currencies.first()
     }
 
     suspend fun createOperation(payload: Operation): Operation {
-        val userId = getUserId()
+        val userId = tokenStorage.userIdFlow.firstOrNull().toString()
         val currencyId = getCurrency().id
         payload.userId = userId
         payload.currencyId = currencyId
@@ -29,7 +27,7 @@ class OperationRepository @Inject constructor(
     }
 
     suspend fun getOperations(): List<Operation> {
-        val userId = getUserId()
+        val userId = tokenStorage.userIdFlow.firstOrNull().toString()
         return operationApi.getOperations(userId)
     }
 

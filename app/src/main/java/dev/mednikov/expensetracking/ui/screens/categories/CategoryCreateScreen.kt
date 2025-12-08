@@ -48,7 +48,6 @@ fun CategoryCreateScreen(navController: NavController, viewModel: CategoryCreate
                 title = "Create category",
                 onAction = {
                     if (nameState.value.isNotEmpty()) {
-                        // Create
                         val payload = Category(name = nameState.value)
                         viewModel.createCategory(payload)
                     }
@@ -64,10 +63,7 @@ fun CategoryCreateScreen(navController: NavController, viewModel: CategoryCreate
             horizontalAlignment = Alignment.Start,
             modifier = Modifier.fillMaxSize().padding(paddingValues)
         ) {
-            InputFieldComponent(
-                label = "Name",
-                state = nameState
-            )
+            InputFieldComponent(label = "Name", state = nameState)
         }
     }
 }

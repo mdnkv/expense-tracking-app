@@ -39,7 +39,6 @@ fun NavGraphBuilder.operationNavigation(navController: NavController) {
             backStackEntry.arguments?.getString("operationId").let {
                 OperationUpdateScreen(navController, operationId = it.toString())
             }
-
         }
     }
 }
